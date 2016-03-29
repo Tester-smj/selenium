@@ -8,7 +8,7 @@ import sys
 from selenium import webdriver
 from pytesser import *
 import unittest, time, re
-import two
+import httpreques
 
 # 二值化
 threshold = 140

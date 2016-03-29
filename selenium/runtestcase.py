@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 import unittest, time, re
 import jiesong
@@ -11,38 +7,42 @@ import enterprises
 import guojing
 import loginout
 import HTMLTestRunner
-import two
+import sys
+import Myorder
+import Login
+import method
 
 class Senbaba(unittest.TestCase):
     def setUp(self):
-        self.browser = webdriver.Chrome(r"c:/python27/chromedriver.exe")
-        self.browser.implicitly_wait(10)
-        self.base_url = "http://www.senbaba.cn/"
-        self.verificationErrors = []
-        self.accept_next_alert = True
-        self.browser.get(self.base_url)
-        self.browser.maximize_window()
-        self.browser.find_element_by_link_text("登录").click()
-        self.browser.find_element_by_name("username").send_keys(u"18707148477")
-        self.browser.find_element_by_id("pwd").send_keys(u"123456")
-        self.browser.find_element_by_class_name("loginBtn").click()
-        print(u"-------登录成功！--------")
+        Login.login(self)
 
     def test_jiesong(self):
+        u"""接送类型下单"""
         jiesong.jiesong(self)
 
     def test_gentuan(self):
+        u"""跟团类型下单"""
         gentuan.gentuan(self)
 
     def test_guojing(self):
+        u"""过境类型下单"""
         guojing.guojing(self)
 
     def test_enterprise(self):
+        u"""企业加入"""
         #two.login('a')
         enterprises.enterprises(self)
 
     def test_loginout(self):
+        u"""用户退出"""
         loginout.loginout(self)
+
+    def test_myoder(self):
+        u"""我的订单"""
+        Myorder.myorder(self)
+
+    #def test_order(self):
+        #method.method(self)
 
     def is_element_present(self, how, what):
         try: self.browser.find_element(by=how, value=what)
@@ -70,19 +70,21 @@ class Senbaba(unittest.TestCase):
         self.assertEqual([], self.verificationErrors)
 
 if __name__ == "__main__":
+    reload(sys)
+    sys.setdefaultencoding('utf8')
+    #构造测试集
     suite = unittest.TestSuite()
-
     suite.addTest(Senbaba("test_jiesong"))
     suite.addTest(Senbaba("test_gentuan"))
     suite.addTest(Senbaba("test_guojing"))
-
-    filename='F:\\test_case\\erro_png\\result1.html'
+    suite.addTest(Senbaba("test_enterprise"))
+    suite.addTest(Senbaba("test_loginout"))
+    suite.addTest(Senbaba("test_myoder"))
+    filename='F:\\test_case\\erro_png\\webresult.html'
     fp=file(filename,'wb')
-
-    runner=HTMLTestRunner.HTMLTestRunner(
+    #执行测试
+    runner =HTMLTestRunner.HTMLTestRunner(
         stream=fp,
-        title='Report_title',
-        description='Report_description'
-    )
-
+        title=u'下单平台web测试报告',
+        description=u'用例执行情况：')
     runner.run(suite)

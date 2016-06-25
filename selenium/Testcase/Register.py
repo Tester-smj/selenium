@@ -26,5 +26,5 @@ def regist(self):
     time.sleep(2)
     #a=self.browser.find_element_by_class_name("userName").text
     #print(a)
-    print(u"-------登录成功！--------")
+    print(u"-------注册成功！--------")
 

@@ -20,7 +20,7 @@ def enterprises(self):
     browser.find_element_by_id("enterpriseAddress").send_keys(u"测试地址")
     browser.find_element_by_id("enterprisePhone").send_keys("07558888888")
     browser.find_element_by_id("enterpriseContacts").send_keys(u"测试")
-    text= Picture.verifyImg("C:\Users\Administrator\PycharmProjects\selenium\Testcase\2.jpg")
+    text= Picture.verifyImg("C:\\Users\Administrator\\PycharmProjects\\selenium\\Testcase\\2.jpg")
     browser.find_element_by_id("verificationCode").send_keys(text)
     time.sleep(2)
     browser.find_element_by_id("submt").click()

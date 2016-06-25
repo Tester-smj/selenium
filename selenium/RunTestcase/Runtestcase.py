@@ -2,7 +2,8 @@
 import HTMLTestRunner
 import sys
 import unittest
-from Testcase import Guojing, Register, Enterprises,Jiesong,Login,Jargon,Gentuan,Loginout,Myorder
+import test11
+from Testcase import Guojing, Register, Enterprises,Jiesong,Login,Jargon,Gentuan,Loginout,Myorder,FixedPrice
 
 class Senbaba(unittest.TestCase):
     def setUp(self):
@@ -39,6 +40,10 @@ class Senbaba(unittest.TestCase):
     def test_jargon(self):
         u"""黑话下单"""
         Jargon.jargon(self)
+
+    def test_fixedpice(self):
+        u"""固定路线价格"""
+        FixedPrice.fixedprice(self)
 
     def tearDown(self):
         self.browser.quit()

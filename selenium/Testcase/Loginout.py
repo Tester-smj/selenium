@@ -6,12 +6,13 @@ from selenium.webdriver.common.action_chains import ActionChains
 def loginout(self):
     time.sleep(1.5)
     browser = self.browser
-    a=browser.find_element_by_class_name("log-dd-trigger")
+    a=browser.find_element_by_class_name("userIcon")
     b=browser.find_element_by_id("logout")
-    ActionChains(browser).move_to_element(a).click(b).perform()
+    action=ActionChains(browser)
+    action.move_to_element(a)
     time.sleep(2)
-    #browser.find_element_by_id("logout").click()
-    time.sleep(1.5)
+    action.click(b).perform()
+    time.sleep(2)
     print("----注销成功-----")
 
 #menu = driver.find_element_by_css_selector(".nav")

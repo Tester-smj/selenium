@@ -13,18 +13,17 @@ class TestCode(unittest.TestCase):
         self.url="http://120.24.68.124:8080/sbborders/login"
         self.data ={"uname":"15112408147","pwd":"123456"}
         r=requests.get(self.url,self.data)
+        print(type(self.data))
         # new=json.dumps(change, ensure_ascii=False)
-        # print(r.text)
+        print(r.text)
         # print(r.cookies)
         # print(r.headers)
         global b,q
         b=re.findall("{(.+?)}",str(r.headers))
         # d=simplejson.dumps(b)
-        print(b)
         q="".join(b)
-        print(q)
-        msg=r.headers.get("Transfer-Encoding")
-        self.assertEqual(msg,'chunked')
+        # msg=r.headers.get("Transfer-Encoding")
+        # self.assertEqual(msg,'chunked')
     def test_prices(self):
         #正式环境
         self.url="http://www.senbaba.cn/getprice"
@@ -34,7 +33,7 @@ class TestCode(unittest.TestCase):
         q=requests.get(self.url,self.data)
         # change=q.json()
         # new=json.dumps(change,ensure_ascii=False)
-        # print(q.text)
+        print(q.text)
     def test_addorder(self):
         u"""多辆车不议价包销下单"""
         self.url="http://www.senbaba.cn/addorder"

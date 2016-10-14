@@ -33,8 +33,6 @@ console.setFormatter(formatter)
 logging.getLogger('').addHandler(console)
 
 import xlrd,hashlib,json,os,logging,sys
-# request_url='http://www.senbaba.cn'
-# testCaseFile=r'F:\test\study\testCaseFile.xlsx'
 def runTest(testCaseFile):
       testCaseFile = os.path.join(os.getcwd(),'testCaseFile.xlsx')
       if not os.path.exists(testCaseFile):
@@ -58,13 +56,13 @@ def runTest(testCaseFile):
             request_data = table.cell(i, 6).value.replace('\n','').replace('\r','')
             encryption = table.cell(i, 7).value.replace('\n','').replace('\r','')
             check_point = table.cell(i, 8).value
-            if encryption == 'MD5':              #如果数据采用md5加密，便先将数据加密
-                request_data = json.loads(request_data)
-                request_data['pwd'] = md5Encode(request_data['pwd'])
-                status, resp, s = interfaceTest(num, api_purpose, api_host, request_url, request_data, check_point, request_method, request_data_type, s)
-            if status != 200 or check_point not in resp:
-                #如果状态码不为200或者返回值中没有检查点的内容，那么证明接口产生错误，保存错误信息。
-               errorCase.append(num + ' ' + api_purpose, str(status), 'http://'+api_host+request_url, resp)
+            # if encryption == 'MD5':              #如果数据采用md5加密，便先将数据加密
+            #     request_data = json.loads(request_data)
+            #     request_data['pwd'] = md5Encode(request_data['pwd'])
+            #     status, resp, s = interfaceTest(num, api_purpose, api_host, request_url, request_data, check_point, request_method, request_data_type, s)
+      #       if status != 200 or check_point not in resp:
+      #           #如果状态码不为200或者返回值中没有检查点的内容，那么证明接口产生错误，保存错误信息。
+      #          errorCase.append(num + ' ' + api_purpose, str(status), 'http://'+api_host+request_url, resp)
       return errorCase
 #接受runTest的传参，利用requests构造HTTP请求
 import requests,re
@@ -85,7 +83,7 @@ def interfaceTest(num, api_purpose, api_host, request_method, request_data_type,
      else:
           logging.error(num + ' ' + api_purpose + '  HTTP请求方法错误，请确认[Request Method]字段是否正确！！！')
           s = None
-          return 400, resp, s
+          return 400
      status = r.status_code
      resp = r.text
      print resp
@@ -127,7 +125,7 @@ def sendMail(text):
       smtp.quit()
 
 def main():
-      errorTest = runTest(r'F:\test\study\testCaseFile.xlsx')
+      errorTest = runTest('F:\test\study\testCaseFile.xlsx')
       if len(errorTest) > 0:
           html = '<html><body>接口自动化扫描，共有 ' + str(len(errorTest)) + ' 个异常接口，列表如下：' + '</p><table><tr><th style="width:100px;text-align:left">接口</th><th style="width:50px;text-align:left">状态</th><th style="width:200px;text-align:left">接口地址</th><th   style="text-align:left">接口返回值</th></tr>'
           for test in errorTest:
